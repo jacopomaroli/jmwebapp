@@ -1,0 +1,12 @@
+{
+  "projects": {
+    "jacopomaroli.com": {
+      "schemaPath": "schema.graphql",
+      "extensions": {
+        "endpoints": {
+          "default": "https://jacopomaroli.com/graphql"
+        }
+      }
+    }
+  }
+}

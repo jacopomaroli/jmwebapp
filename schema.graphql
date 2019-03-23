@@ -1,0 +1,99 @@
+# source: https://jacopomaroli.com/graphql
+# timestamp: Wed Aug 29 2018 00:21:02 GMT+0100 (GMT Summer Time)
+
+type Category {
+  term_id: Int!
+  name: String
+  slug: String
+  posts(post_type: String = "post", limit: Int, skip: Int, order: OrderInput, from_date: String, to_date: String): [Post]
+}
+
+type Menu {
+  id: ID!
+  name: String
+  items: [MenuItem]
+}
+
+type MenuItem {
+  id: ID!
+  linkedId: Int
+  order: Int
+  navitem: Post
+  children: [MenuItem]
+}
+
+enum MetaType {
+  _thumbnail_id
+  _wp_attached_file
+  react_layout
+  amazonS3_info
+  order
+}
+
+input OrderInput {
+  orderBy: String
+  direction: String
+}
+
+type Post {
+  id: Int
+  post_title: String
+  post_content: String
+  post_excerpt(excerpt_length: Int): String
+  post_status: String
+  post_type: String
+  post_name: String
+  post_parent: Int
+  post_date: String
+  menu_order: Int
+  layout: Postmeta
+  thumbnail: Thumbnail
+  categories: [Category]
+  post_meta(keys: [MetaType], after: String, first: Int, before: String, last: Int): [Postmeta]
+  author: User
+  permalink(permalink: String, leavename: Boolean): String
+}
+
+type Postmeta {
+  meta_id: Int
+  post_id: Int
+  meta_key: String
+  meta_value: String
+  connecting_post: Post
+}
+
+type Query {
+  settings: Setting
+  posts(post_type: [String], limit: Int, skip: Int, order: OrderInput, userId: Int): [Post]
+  post(name: String, id: Int): Post
+  attachments(ids: [Int]): [Thumbnail]
+  postmeta(post_id: Int!, keys: [MetaType]): [Postmeta]
+  menus(name: String!): Menu
+  category(term_id: Int, name: String): Category
+  user(name: String, id: Int): User
+}
+
+type Setting {
+  uploads: String
+  amazonS3: Boolean
+}
+
+type Thumbnail {
+  id: Int
+  src: String
+  sizes: [ThumbnailSize]
+}
+
+type ThumbnailSize {
+  size: String
+  file: String
+}
+
+type User {
+  id: Int
+  user_nicename: String
+  user_email: String
+  user_registered: String
+  display_name: String
+  posts(post_type: String): [Post]
+}

@@ -1,0 +1,13 @@
+{
+  "files.exclude": {
+    "__error": "Not found",
+    ".vscode": true,
+    "yarn-error.log": true,
+    ".eslintignore": true,
+    ".gitignore": true,
+    ".graphqlconfig": true,
+    "node_modules": true,
+    "yarn.lock": true,
+    "junit.xml": true
+  }
+}

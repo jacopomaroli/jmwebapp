@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style type="text/css">
+	#mainContainer{position:relative; width:640px; height:480px;}
+	#FPSCount{position:absolute; top:0; right:0;}
+</style>
+</head>
+<body>
+
+<div id="mainContainer">
+	<canvas id="myCanvas" width="640" height="480"></canvas>
+	<div id="FPSCount"></div>
+</div>
+
+<script>
+var assetsBeacon = {
+	engineReel : false
+};
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext("2d");
+
+var eFPSCount = null;
+
+var fps = 27;
+var now;
+var then = 0;
+var interval = 1000/fps;
+var delta;
+var fpsDebounce = 500;
+
+var i = -1;
+var engineReel = null;
+
+function loadEngineReel()
+{
+	engineReel = new Image();
+	engineReel.src = 'steam.png';
+	engineReel.onload = function() {
+		assetsBeacon.engineReel = true;
+		updateAssetsBeacon();
+	};
+}
+
+function loadAssets()
+{
+	loadEngineReel();
+	eFPSCount = document.getElementById("FPSCount");
+	requestAnimationFrame(step);
+}
+
+function updateAssetsBeacon()
+{
+	for(var key in assetsBeacon)
+	{
+		if(!assetsBeacon[key])
+			return;
+	}
+	window.requestAnimationFrame(step);
+}
+
+function step(timestamp) {
+	window.requestAnimationFrame(step);
+    now = timestamp;
+    delta = now - then;
+	if (delta < interval) return;
+	then = now - (delta % interval);
+	if(fpsDebounce > 0)
+		fpsDebounce -= delta;
+	else
+	{
+		eFPSCount.innerHTML = (1000.0/delta).toFixed(1) + "fps";
+		fpsDebounce = 500;
+	}
+	
+	if(i == 91)
+		i = -1;
+	i++;
+	ctx.clearRect(0,0,640,480);
+	ctx.drawImage(engineReel, 640*i*-1, 0);
+}
+
+document.addEventListener('DOMContentLoaded', function(){
+	loadAssets();
+}, false);
+
+</script>
+
+</body>
+</html>

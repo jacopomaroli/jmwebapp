@@ -1,0 +1,12 @@
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>    
+  <defs>
+    <linearGradient id="fadeGrad" x2="0" y2="1">
+      <stop stop-color="white" stop-opacity="1" offset="0.75"/>
+      <stop stop-color="white" stop-opacity="0" offset="1"/>
+    </linearGradient>
+    <mask id="fade" maskUnits="objectBoundingBox" maskContentUnits="objectBoundingBox">
+      <rect width="1" height="1" fill="url(#fadeGrad)"/>
+    </mask>
+  </defs>
+  <rect x="0" y="0" width="100%" height="100%" mask="url(#fade)"/>
+</svg>
