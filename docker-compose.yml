@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  jmwebapp:
+    image: jmwebapp:0.0.2
+    container_name: jmwebapp
+    ports:
+    - "8888:8888"
